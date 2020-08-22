@@ -3,8 +3,14 @@ package com.lxm.netty.server.processor;
 import java.util.HashMap;
 import java.util.Map;
 
-
-public final class RequestProcessorProvider {
+/**
+ * 
+ * ClassName: com.lxm.netty.server.processor.RequestProcessorRegistry <br/>
+ * Function: 请求处理器注册器<br/>
+ * Date: 2020年8月22日 下午3:29:57 <br/>
+ * @author liuxiangming <br/>
+ */
+public final class RequestProcessorRegistry {
 
     private static final Map<Integer, RequestProcessor> PROCESSOR_MAP = new HashMap<>();
 
@@ -25,5 +31,5 @@ public final class RequestProcessorProvider {
     }
 
 
-    private RequestProcessorProvider() {}
+    private RequestProcessorRegistry() {}
 }

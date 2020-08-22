@@ -9,7 +9,7 @@ package com.lxm.netty.server.entitytype;
 
 import com.lxm.netty.codec.registry.EntityDecoderRegistry;
 import com.lxm.netty.codec.registry.EntityEncoderRegistry;
-import com.lxm.netty.server.processor.RequestProcessorProvider;
+import com.lxm.netty.server.processor.RequestProcessorRegistry;
 
 /**
  * 
@@ -28,7 +28,7 @@ public class EntityTypeRegistry {
         for(EntityTypeEnum enum1: EntityTypeEnum.values()){
             EntityDecoderRegistry.addDecoder(enum1.getType(), enum1.getCoder());
             EntityEncoderRegistry.addEncoder(enum1.getType(), enum1.getCoder());
-            RequestProcessorProvider.addProcessor(enum1.getType(), enum1.getProcessor());
+            RequestProcessorRegistry.addProcessor(enum1.getType(), enum1.getProcessor());
         }
     }
 

@@ -89,7 +89,7 @@ public class NettyServer {
             @Override
             public void operationComplete(ChannelFuture future) {
                 if (future.cause() != null) {
-                    logger.info("Token server start failed (port={}), failedTimes: {}, {}", port, failedTimes.get(), future.cause());
+                    logger.info("Netty server start failed (port={}), failedTimes: {}, {}", port, failedTimes.get(), future.cause());
                     currentState.compareAndSet(ServerConstants.SERVER_STATUS_STARTING, ServerConstants.SERVER_STATUS_OFF);
                     int failCount = failedTimes.incrementAndGet();
                     if (failCount > MAX_RETRY_TIMES) {
@@ -100,7 +100,7 @@ public class NettyServer {
                         Thread.sleep(failCount * RETRY_SLEEP_MS);
                         start();
                     } catch (Exception e) {
-                        logger.info("Failed to start token server when retrying, exception:", e);
+                        logger.info("Failed to start netty server when retrying, exception:", e);
                     }
                 } else {
                     logger.info("Netty server started success at port: ", port);

@@ -8,7 +8,7 @@ import com.lxm.netty.entity.RequestEntity;
 import com.lxm.netty.entity.ResponseEntity;
 import com.lxm.netty.server.connection.ConnectionPool;
 import com.lxm.netty.server.processor.RequestProcessor;
-import com.lxm.netty.server.processor.RequestProcessorProvider;
+import com.lxm.netty.server.processor.RequestProcessorRegistry;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -42,7 +42,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
         if (msg instanceof RequestEntity) {
             RequestEntity request = (RequestEntity)msg;
             // 根据请求类型选择处理器处理请求（防止netty事件处理线程（每个socketChannel分配一个线程处理，客户端使用一个channel连续发送请求时，则在一个线程中串行处理）阻塞，这里可采用线程池处理）
-            RequestProcessor<?, ?> processor = RequestProcessorProvider.getProcessor(request.getType());
+            RequestProcessor<?, ?> processor = RequestProcessorRegistry.getProcessor(request.getType());
             if (processor == null) {
                 logger.warn("No processor for request type: {}", request.getType());
                 writeBadResponse(ctx, request);

@@ -19,15 +19,24 @@ import javax.crypto.Cipher;
  */
 public class RSAUtils {
 
-    /**
-     * RSA最大加密明文大小
-     */
-    private static final int    MAX_ENCRYPT_BLOCK  = 117;
+    
+    private static int KEY_SIZE = 2048; // 密钥长度(bit)
 
     /**
      * RSA最大解密密文大小
      */
-    private static final int    MAX_DECRYPT_BLOCK  = 128;
+    private static final int    MAX_DECRYPT_BLOCK  = KEY_SIZE / 8;
+    
+    /**
+     * RSA最大加密明文大小。
+     * 
+     * RSA加密常用的填充模式有三种：RSA_PKCS1_PADDING， RSA_PKCS1_OAEP_PADDING， RSA_NO_PADDING
+     * RSA_PKCS1_PADDING（java默认rsa填充模式）： 输入明文，必须 比 RSA 钥模长(modulus) 短至少11个字节, 也就是　RSA_size(rsa) – 11；输出密文和modulus一样长
+     * RSA_PKCS1_OAEP_PADDING： 输入明文长度，RSA_size(rsa) – 41； 输出密文和modulus一样长
+     * RSA_NO_PADDING： 输入明文可以和RSA钥模长一样长，如果输入的明文过长，必须切割，然后填充；输出密文和modulus一样长
+     * 
+     */
+    private static final int    MAX_ENCRYPT_BLOCK  = MAX_DECRYPT_BLOCK - 11;
 
     public static final String  SIGNATURE_ALGO     = "SHA1WithRSA";
 
